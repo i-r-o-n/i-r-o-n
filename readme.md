@@ -48,3 +48,7 @@ my dog is at my feet watching the door.
 - type theory/algebra
 - [category theory](https://youtu.be/I8LbkfSSR58)
 - diff eqs
+
+## other goals:
+
+- 200 WPM typing
