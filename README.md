@@ -1,6 +1,6 @@
 my cat is currently sitting in the middle of my desk and staring at me
 
-[dvorak](https://en.wikipedia.org/wiki/Anton%C3%ADn_Dvo%C5%99%C3%A1k) user
+[dvorak](https://dvorak-keyboard.com/) user
 
 #### peripherals:
 - ⌨️ zsa [moonlander](https://configure.zsa.io/embed/moonlander/layouts/P7DxJ/latest/0) w/ kailh silvers (~40g)
