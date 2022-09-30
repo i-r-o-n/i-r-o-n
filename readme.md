@@ -51,4 +51,4 @@ my dog is at my feet watching the door.
 
 ## other goals:
 
-- 200 WPM typing
+- 200 WPM [typing](https://monkeytype.com/profile/Iron)
