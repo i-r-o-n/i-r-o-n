@@ -20,7 +20,7 @@ my dog is at my feet watching the door.
 
 #### proximal
 
-- [generic discord bot](https://github.com/Irr0n/DreamgroveBot)
+- [generic discord bot](https://github.com/Irr0n/DreamgroveBot) redevelop in rust
 
 #### distal
 
