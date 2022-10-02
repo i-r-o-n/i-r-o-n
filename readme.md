@@ -6,7 +6,7 @@ my dog is at my feet watching the door.
 
 #### productivity methods:
 
-- [dvorak](https://dvorak-keyboard.com/)
+- [semimak](https://github.com/semilin/semimak)
 - [notion](https://notion.so)
 
 > ### peripherals:
