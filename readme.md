@@ -10,7 +10,7 @@ my dog is at my feet watching the door.
 - [notion](https://notion.so)
 
 > ### peripherals:
-> - ⌨️ zsa [moonlander](https://configure.zsa.io/embed/moonlander/layouts/P7DxJ/latest/0) w/ kailh silvers (~40g)
+> - ⌨️ zsa [moonlander](https://configure.zsa.io/embed/moonlander/layouts/RWWdl/latest/0) w/ kailh silvers (~40g)
 > - ⌨ corne lp w/ kalih choc pinks (~20g) (wip board)
 > - 🖱️ corsair harpoon wireless
 > - 🖱 bloody a70x (for low debounce times)
