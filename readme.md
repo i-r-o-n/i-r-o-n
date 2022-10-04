@@ -39,7 +39,6 @@ my dog is at my feet watching the door.
 
 - kotlin (+ mixins)
 - haskell
-- f\#
 - go
 
 #### math
