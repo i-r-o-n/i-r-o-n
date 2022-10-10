@@ -20,7 +20,8 @@ my dog is at my feet watching the door.
 
 #### proximal
 
-- [generic discord bot](https://github.com/Irr0n/DreamgroveBot) redevelop in go
+- create notion events from ics feed
+- [generic discord bot](https://github.com/Irr0n/DreamgroveBot)
 
 #### distal
 
