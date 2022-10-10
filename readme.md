@@ -1,9 +1,5 @@
 # information
 
-my cat is currently sitting in the middle of my desk; he is staring at me.
-
-my dog is at my feet watching the door.
-
 #### productivity methods:
 
 - [semimak](https://github.com/semilin/semimak)
