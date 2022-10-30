@@ -5,14 +5,17 @@
 - [semimak](https://github.com/semilin/semimak)
 - [notion](https://notion.so)
 
+#### favorites
+
+- font: [Jetbrains Mono](https://www.jetbrains.com/lp/mono/) ([nerd font](https://github.com/ryanoasis/nerd-fonts/releases/) for zsh powerlevel10k)
+- [color:](http://randomcolour.com/) (links to a random color)
+- fluid: water, with a close second being [gelid cryotheum](https://ftbwiki.org/Gelid_Cryotheum) from the [Thermal Foundation](https://ftbwiki.org/Thermal_Foundation) mod for Minecraft
+
 > ### peripherals:
 > - ⌨️ zsa [moonlander](https://configure.zsa.io/embed/moonlander/layouts/RWWdl/latest/0) w/ kailh silvers (~40g)
 > - ⌨ corne lp w/ kalih choc pinks (~20g) (wip board)
 > - 🖱️ corsair harpoon wireless
 > - 🖱 bloody a70x (for low debounce times)
-
-> ### favorites
-> - font: [Jetbrains Mono](https://www.jetbrains.com/lp/mono/) ([nerd font](https://github.com/ryanoasis/nerd-fonts/releases/) for zsh powerlevel10k)
 
 ## projects:
 
