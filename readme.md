@@ -11,6 +11,8 @@
 > - 🖱️ corsair harpoon wireless
 > - 🖱 bloody a70x (for low debounce times)
 
+> ### favorites
+> - font: [Jetbrains Mono](https://www.jetbrains.com/lp/mono/) ([nerd font](https://github.com/ryanoasis/nerd-fonts/releases/) for zsh powerlevel10k)
 
 ## projects:
 
@@ -24,6 +26,7 @@
 - constitutional set-theory visualization using [d3js](https://d3js.org/)
 - corne keyboard firmware layout with many layers
 - [obsidian](https://obsidian.md/)-like node linking graph extension for [notion enhanced](https://notion-enhancer.github.io/)
+- minimalist android launcher similar to [this one](https://play.google.com/store/apps/details?id=com.indistractablelauncher.android&hl=en_US&gl=US).
 
 #### magnidistal
 
