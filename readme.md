@@ -4,6 +4,7 @@
 
 - [semimak](https://github.com/semilin/semimak)
 - [notion](https://notion.so)
+- [vimium](https://vimium.github.io/)
 
 #### favorites
 
