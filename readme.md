@@ -22,21 +22,21 @@
 
 #### proximal
 
-- create notion events from ics feed
 - [generic discord bot](https://github.com/Irr0n/DreamgroveBot)
+- windows vim navigation tool simailar to [this one](https://github.com/zsims/hunt-and-peck)
+- create notion events from ics feed
 
 #### distal
 
-- constitutional set-theory visualization using [d3js](https://d3js.org/)
+- minimalist android launcher similar to [this one](https://play.google.com/store/apps/details?id=com.indistractablelauncher.android&hl=en_US&gl=US).
 - corne keyboard firmware layout with many layers
 - [obsidian](https://obsidian.md/)-like node linking graph extension for [notion enhanced](https://notion-enhancer.github.io/)
-- transcribe handwriten notes and generae notion cards with appropriate attributes
-- minimalist android launcher similar to [this one](https://play.google.com/store/apps/details?id=com.indistractablelauncher.android&hl=en_US&gl=US).
-- windows vim navigation tool simailar to [this one](https://github.com/zsims/hunt-and-peck).
 
 #### magnidistal
 
 - journalling productivity application
+- constitutional set-theory visualization using [d3js](https://d3js.org/)
+- transcribe handwriten notes and generae notion cards with appropriate attributes
 
 
 ## learning goals:
