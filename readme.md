@@ -31,6 +31,7 @@
 - [obsidian](https://obsidian.md/)-like node linking graph extension for [notion enhanced](https://notion-enhancer.github.io/)
 - transcribe handwriten notes and generae notion cards with appropriate attributes
 - minimalist android launcher similar to [this one](https://play.google.com/store/apps/details?id=com.indistractablelauncher.android&hl=en_US&gl=US).
+- windows vim navigation tool simailar to [this one](https://github.com/zsims/hunt-and-peck).
 
 #### magnidistal
 
