@@ -43,9 +43,10 @@
 
 #### languages
 
-- kotlin (+ mixins)
+- kotlin mixins
 - haskell
 - go
+- purescript
 
 #### math
 
