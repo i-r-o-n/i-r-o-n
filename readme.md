@@ -57,3 +57,4 @@
 ## other goals:
 
 - 200 WPM [typing](https://monkeytype.com/profile/Iron)
+- learn to read old english
