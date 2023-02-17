@@ -1,5 +1,9 @@
 # information
 
+### contact
+
+discord: iron#1337
+
 #### productivity methods:
 
 - [semimak](https://github.com/semilin/semimak)
