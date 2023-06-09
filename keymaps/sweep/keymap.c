@@ -1,23 +1,6 @@
-/*
-Copyright 2019 @foostan
-Copyright 2020 Drashna Jaelre <@drashna>
-
-This program is free software: you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation, either version 2 of the License, or
-(at your option) any later version.
-
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
-
-You should have received a copy of the GNU General Public License
-along with this program.  If not, see <http://www.gnu.org/licenses/>.
-*/
-
-// qmk flash -c -kb crkbd -km iron -e CONVERT_TO=blok
-
+// qmk flash -c -kb ferris/sweep -km iron -e CONVERT_TO=blok -bl uf2-split-<left|right>
+// TODO: create combos for brackets with arrow back
+// TODO: create tri-layer for osms and system controls
 
 #include QMK_KEYBOARD_H
 #include <stdio.h>
@@ -32,7 +15,14 @@ enum user_layers {
     _MED
 };
 
-// defining any key combo greater than seven characters
+enum custom_keycodes {
+    DBPRN = SAFE_RANGE, // double parenthesis with arrow back
+    ALT_TAB
+};
+
+enum combos {};
+
+// defining any key combo greater than seven characters?
 
 // one shot mods
 #define OSC OSM(MOD_LCTL)
@@ -41,9 +31,45 @@ enum user_layers {
 #define OSA OSM(MOD_LALT)
 
 
+bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+  switch (keycode) { // This will do most of the grunt work with the keycodes.
+    case ALT_TAB:
+      if (record->event.pressed) {
+        if (!is_alt_tab_active) {
+          is_alt_tab_active = true;
+          register_code(KC_LALT);
+        }
+        alt_tab_timer = timer_read();
+        register_code(KC_TAB);
+      } else {
+        unregister_code(KC_TAB);
+      }
+      break;
+
+    case DBPRN:
+      if (record->event.pressed) {
+
+      } else {
+
+      }
+      break;
+  }
+  return true;
+};
+
+void matrix_scan_user(void) { // The very important timer.
+  if (is_alt_tab_active) {
+    if (timer_elapsed(alt_tab_timer) > 1000) {
+      unregister_code(KC_LALT);
+      is_alt_tab_active = false;
+    }
+  }
+};
+
+
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     //base
-  [_BSE] = LAYOUT_split_3x5_2(
+  [_BSE] = LAYOUT(
   //,--------------------------------------------.                    ,--------------------------------------------.
          KC_F,    KC_L,    KC_H,    KC_V,    KC_Z,                      KC_QUOT,    KC_W,    KC_U,    KC_O,    KC_Y,
   //|--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------|
@@ -56,7 +82,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   ),
     //extension
-  [_EXT] = LAYOUT_split_3x5_2(
+  [_EXT] = LAYOUT(
   //,-------------------------------------------.                    ,--------------------------------------------.
      XXXXXXX, KC_LGUI, CW_TOGG,   TO(6), XXXXXXX,                      XXXXXXX, KC_HOME,   KC_UP,  KC_END, XXXXXXX,
   //|-------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------|
@@ -68,31 +94,31 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                                       //`----------------'  `-----------------'
   ),
     //symbol
-  [_SYM] = LAYOUT_split_3x5_2(
+  [_SYM] = LAYOUT(
   //,--------------------------------------------.                    ,--------------------------------------------.
       KC_LABK, KC_RABK, KC_LCBR, KC_RCBR, XXXXXXX,                       KC_GRV, KC_AMPR, KC_ASTR, KC_MINS, KC_PLUS,
   //|--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------|
       KC_BSLS, KC_SLSH, KC_LPRN, KC_RPRN, KC_PIPE,                      KC_TILD, KC_COLN, KC_SCLN, KC_QUES, KC_EXLM,
   //|--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------|
-      KC_UNDS,  KC_EQL, KC_LBRC, KC_RBRC, XXXXXXX,                      KC_CIRC,   KC_AT, KC_PERC,  KC_DLR, KC_HASH,
+      KC_UNDS,  KC_EQL, KC_LBRC, KC_RBRC, XXXXXXX,                        KC_AT, KC_CIRC, KC_PERC,  KC_DLR, KC_HASH,
   //|--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------|
                                               OSS,  KC_SPC,      TO(0), _______
                                       //`-----------------'  `-----------------'
   ),
     //numpad
-  [_NUM] = LAYOUT_split_3x5_2(
+  [_NUM] = LAYOUT(
   //,--------------------------------------------.                    ,--------------------------------------------.
       XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                      XXXXXXX,    KC_7,    KC_8,    KC_9,  KC_DOT,
   //|--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------|
-      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                      XXXXXXX,    KC_4,    KC_5,    KC_6,    KC_0,
+      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                      XXXXXXX,    KC_4,    KC_5,    KC_6,  KC_ENT,
   //|--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------|
       XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                      XXXXXXX,    KC_1,    KC_2,    KC_3, KC_BSPC,
   //|--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------|
-                                            MO(4), _______,      TO(0),   KC_ENT
-                                      //`-----------------'  `------------------'
+                                            MO(4), _______,      TO(0),    KC_0
+                                      //`-----------------'  `-----------------'
   ),
     //function
-  [_FNC] = LAYOUT_split_3x5_2(
+  [_FNC] = LAYOUT(
   //,--------------------------------------------.                    ,--------------------------------------------.
       XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                      XXXXXXX,   KC_F7,   KC_F8,   KC_F9,  KC_F12,
   //|--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------|
@@ -104,7 +130,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                                       //`-----------------'  `-----------------'
   ),
     //mouse
-  [_MSE] = LAYOUT_split_3x5_2(
+  [_MSE] = LAYOUT(
   //,--------------------------------------------.                    ,--------------------------------------------.
       XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                      XXXXXXX, KC_BTN1, KC_MS_U, KC_BTN2, KC_WH_U,
   //|--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------|
@@ -116,7 +142,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                                       //`-----------------'  `-----------------'
   ),
     //media
-  [_MED] = LAYOUT_split_3x5_2(
+  [_MED] = LAYOUT(
   //,--------------------------------------------.                    ,--------------------------------------------.
       XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
   //|--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------|
