@@ -1,5 +1,9 @@
 # information
 
+### contact
+
+discord: iron#1337
+
 #### productivity methods:
 
 - [semimak](https://github.com/semilin/semimak)
@@ -57,3 +61,4 @@
 ## other goals:
 
 - 200 WPM [typing](https://monkeytype.com/profile/Iron)
+- learn to read old english
