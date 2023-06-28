@@ -1,14 +1,14 @@
 // qmk flash -c -kb ferris/sweep -km iron -e CONVERT_TO=blok -bl uf2-split-<left|right>
-// TODO: create combos for brackets with arrow back
-// TODO: create tri-layer for osms and system controls
 
 #include QMK_KEYBOARD_H
 #include <stdio.h>
+
 
 enum user_layers {
     _BSE,
     _EXT,
     _SYM,
+    _SYS,
     _NUM,
     _FNC,
     _MSE,
@@ -16,23 +16,97 @@ enum user_layers {
 };
 
 enum custom_keycodes {
-    DBPRN = SAFE_RANGE, // double parenthesis with arrow back
-    ALT_TAB
+  ALT_TAB = SAFE_RANGE,
+  DBPRN, // double parenthesis with arrow back
+  DBBRC, // double brackets
+  DBCBR, // double curly brackets
+  DBABK  // double angled brackets
 };
 
-enum combos {};
+bool is_alt_tab_active = false;
+uint16_t alt_tab_timer = 0;
 
-// defining any key combo greater than seven characters?
+// modifier, layer combos
+const uint16_t PROGMEM tlt_blii_combo[] = {TL_LOWR, KC_Q, COMBO_END};
+const uint16_t PROGMEM trt_brii_combo[] = {TL_UPPR, KC_P, COMBO_END};
+// keycode combos
+const uint16_t PROGMEM dbprn_key_combo[] = {KC_LPRN, KC_RPRN, COMBO_END};
+const uint16_t PROGMEM dbbrc_key_combo[] = {KC_LBRC, KC_RBRC, COMBO_END};
+const uint16_t PROGMEM dbcbr_key_combo[] = {KC_LCBR, KC_RCBR, COMBO_END};
+const uint16_t PROGMEM dbabk_key_combo[] = {KC_LABK, KC_RABK, COMBO_END};
 
-// one shot mods
-#define OSC OSM(MOD_LCTL)
-#define OSS OSM(MOD_LSFT)
-#define OSG OSM(MOD_LGUI)
-#define OSA OSM(MOD_LALT)
+// row: bottom, _middle, top, side: left, right, finger: thumb, index, middle, ring, pinky
+const uint16_t PROGMEM blp_blr_combo[] = {KC_X, KC_J, COMBO_END};
+const uint16_t PROGMEM blr_blm_combo[] = {KC_J, KC_B, COMBO_END};
+const uint16_t PROGMEM blp_blm_combo[] = {KC_X, KC_B, COMBO_END};
+const uint16_t PROGMEM blm_bli_combo[] = {KC_B, KC_M, COMBO_END};
+const uint16_t PROGMEM blr_bli_combo[] = {KC_J, KC_M, COMBO_END};
+const uint16_t PROGMEM tlp_tlr_combo[] = {KC_F, KC_L, COMBO_END};
 
+const uint16_t PROGMEM brp_brr_combo[] = {KC_SCLN, KC_DOT, COMBO_END};
+const uint16_t PROGMEM brr_brm_combo[] = {KC_DOT, KC_COMM, COMBO_END};
+const uint16_t PROGMEM brp_brm_combo[] = {KC_SCLN, KC_COMM, COMBO_END};
+const uint16_t PROGMEM brm_bri_combo[] = {KC_COMM, KC_G, COMBO_END};
+const uint16_t PROGMEM brr_bri_combo[] = {KC_DOT, KC_G, COMBO_END};
+const uint16_t PROGMEM trp_trr_combo[] = {KC_Y, KC_O, COMBO_END};
+
+combo_t key_combos[] = {
+
+  COMBO(tlt_blii_combo, MO(4)),
+  COMBO(trt_brii_combo, MO(6)),
+
+  COMBO(dbbrc_key_combo, DBBRC),
+  COMBO(dbcbr_key_combo, DBCBR),
+  COMBO(dbabk_key_combo, DBABK),
+
+  COMBO(brr_brm_combo, OSM(MOD_LSFT)),
+  COMBO(blr_blm_combo, OSM(MOD_LSFT)),
+
+  COMBO(blp_blr_combo, CW_TOGG),
+  COMBO(brm_bri_combo, KC_BSPC),
+  COMBO(brr_bri_combo, C(KC_BSPC)),
+  COMBO(tlp_tlr_combo, KC_ESC)
+};
+/* COMBO_ACTION(x) is same as COMBO(x, KC_NO) */
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
-  switch (keycode) { // This will do most of the grunt work with the keycodes.
+  switch (keycode) {
+    case DBPRN:
+      if (record->event.pressed) {
+        tap_code16(KC_LPRN);
+        tap_code16(KC_RPRN);
+      } else {
+        tap_code(KC_LEFT);
+      }
+      break;
+
+    case DBBRC:
+      if (record->event.pressed) {
+        tap_code16(KC_LBRC);
+        tap_code16(KC_RBRC);
+      } else {
+        tap_code(KC_LEFT);
+      }
+      break;
+
+    case DBCBR:
+      if (record->event.pressed) {
+        tap_code16(KC_LCBR);
+        tap_code16(KC_RCBR);
+      } else {
+        tap_code(KC_LEFT);
+      }
+      break;
+
+    case DBABK:
+      if (record->event.pressed) {
+        tap_code16(KC_LABK);
+        tap_code16(KC_RABK);
+      } else {
+        tap_code(KC_LEFT);
+      }
+      break;
+
     case ALT_TAB:
       if (record->event.pressed) {
         if (!is_alt_tab_active) {
@@ -45,19 +119,11 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         unregister_code(KC_TAB);
       }
       break;
-
-    case DBPRN:
-      if (record->event.pressed) {
-
-      } else {
-
-      }
-      break;
   }
   return true;
 };
 
-void matrix_scan_user(void) { // The very important timer.
+void matrix_scan_user(void) {
   if (is_alt_tab_active) {
     if (timer_elapsed(alt_tab_timer) > 1000) {
       unregister_code(KC_LALT);
@@ -65,6 +131,16 @@ void matrix_scan_user(void) { // The very important timer.
     }
   }
 };
+
+
+// one shot mods
+#define OSC OSM(MOD_LCTL)
+#define OSS OSM(MOD_LSFT)
+#define OSG OSM(MOD_LGUI)
+#define OSA OSM(MOD_LALT)
+
+#define NEXTTAB C(KC_TAB)
+#define PREVTAB C(S(KC_TAB))
 
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -75,22 +151,22 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------|
          KC_S,    KC_R,    KC_N,    KC_T,    KC_K,                         KC_C,    KC_D,    KC_E,    KC_A,    KC_I,
   //|--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------|
-         KC_X,    KC_J,    KC_B,    KC_M,    KC_Q,                         KC_P,    KC_G, KC_COMM,  KC_DOT,   TT(3),
+         KC_X,    KC_J,    KC_B,    KC_M,    KC_Q,                         KC_P,    KC_G, KC_COMM,  KC_DOT, KC_SCLN,
   //|--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------|
-                                            TT(2),  KC_SPC,      TT(1),     OSS
+                                          TL_LOWR,  KC_SPC,     KC_ENT,  TL_UPPR
                                       //`-----------------'  `-----------------'
 
   ),
     //extension
   [_EXT] = LAYOUT(
   //,-------------------------------------------.                    ,--------------------------------------------.
-     XXXXXXX, KC_LGUI, CW_TOGG,   TO(6), XXXXXXX,                      XXXXXXX, KC_HOME,   KC_UP,  KC_END, XXXXXXX,
+      KC_ESC, KC_LGUI, PREVTAB, NEXTTAB, XXXXXXX,                      XXXXXXX, KC_HOME,   KC_UP,  KC_END, XXXXXXX,
   //|-------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------|
-      KC_ESC, KC_DEL,C(KC_BSPC),KC_BSPC, XXXXXXX,                      XXXXXXX, KC_LEFT, KC_DOWN, KC_RGHT,  KC_TAB,
+         OSG,     OSA,     OSS,     OSC, XXXXXXX,                      XXXXXXX, KC_LEFT, KC_DOWN, KC_RGHT,  KC_TAB,
   //|-------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------|
-         OSA,     OSG,     OSS,     OSC, XXXXXXX,                      C(KC_S), C(KC_V), C(KC_C), C(KC_X), C(KC_Z),
+     C(KC_Z), C(KC_X), C(KC_C), C(KC_V), XXXXXXX,                      XXXXXXX,KC_BSPC,C(KC_BSPC), KC_DEL, XXXXXXX,
   //|-------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------|
-                                           TO(5),  KC_ENT,      TO(0), _______
+                                         _______, _______,    _______, _______
                                       //`----------------'  `-----------------'
   ),
     //symbol
@@ -98,11 +174,23 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //,--------------------------------------------.                    ,--------------------------------------------.
       KC_LABK, KC_RABK, KC_LCBR, KC_RCBR, XXXXXXX,                       KC_GRV, KC_AMPR, KC_ASTR, KC_MINS, KC_PLUS,
   //|--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------|
-      KC_BSLS, KC_SLSH, KC_LPRN, KC_RPRN, KC_PIPE,                      KC_TILD, KC_COLN, KC_SCLN, KC_QUES, KC_EXLM,
+      KC_BSLS, KC_SLSH, KC_LPRN, KC_RPRN, XXXXXXX,                      KC_TILD, KC_UNDS,  KC_EQL, KC_QUES, KC_EXLM,
   //|--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------|
-      KC_UNDS,  KC_EQL, KC_LBRC, KC_RBRC, XXXXXXX,                        KC_AT, KC_CIRC, KC_PERC,  KC_DLR, KC_HASH,
+      XXXXXXX, KC_PIPE, KC_LBRC, KC_RBRC, XXXXXXX,                      KC_PERC, KC_HASH,  KC_DLR,   KC_AT, KC_CIRC,
   //|--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------|
-                                              OSS,  KC_SPC,      TO(0), _______
+                                          _______, _______,    _______, _______
+                                      //`-----------------'  `-----------------'
+  ),
+    //system controls
+  [_SYS] = LAYOUT(
+  //,--------------------------------------------.                    ,--------------------------------------------.
+      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+  //|--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------|
+      C(KC_Z), C(KC_X), C(KC_C), C(KC_V), C(KC_S),                      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+  //|--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------|
+      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+  //|--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------|
+                                          _______, XXXXXXX,    XXXXXXX, _______
                                       //`-----------------'  `-----------------'
   ),
     //numpad
@@ -114,7 +202,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------|
       XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                      XXXXXXX,    KC_1,    KC_2,    KC_3, KC_BSPC,
   //|--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------|
-                                            MO(4), _______,      TO(0),    KC_0
+                                          _______, _______,      MO(5),    KC_0
                                       //`-----------------'  `-----------------'
   ),
     //function
@@ -126,7 +214,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------|
       XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                      XXXXXXX,   KC_F1,   KC_F2,   KC_F3,  KC_F10,
   //|--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------|
-                                          _______, XXXXXXX,    XXXXXXX, XXXXXXX
+                                          XXXXXXX, XXXXXXX,    _______, XXXXXXX
                                       //`-----------------'  `-----------------'
   ),
     //mouse
@@ -138,7 +226,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------|
       XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                      XXXXXXX, KC_WH_L, KC_WH_R, C(KC_V), C(KC_C),
   //|--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------|
-                                          XXXXXXX, XXXXXXX,      TO(0), XXXXXXX
+                                          XXXXXXX, XXXXXXX,    _______, _______
                                       //`-----------------'  `-----------------'
   ),
     //media
@@ -150,7 +238,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------|
       XXXXXXX, KC_MUTE, KC_VOLD, KC_VOLU, XXXXXXX,                      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
   //|--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------|
-                                          XXXXXXX, XXXXXXX,      TO(0), XXXXXXX
+                                          _______, XXXXXXX,    XXXXXXX, _______
                                       //`-----------------'  `-----------------'
   )
 };
