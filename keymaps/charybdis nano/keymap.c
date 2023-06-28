@@ -14,18 +14,22 @@ enum custom_layers {
 
 enum custom_keycodes {
   ALT_TAB = SAFE_RANGE,
+
   DBPRN, // double parenthesis with arrow back
   DBBRC, // double brackets
   DBCBR, // double curly brackets
-  DBABK  // double angled brackets
+  DBABK,  // double angled brackets
+
+  DDPI_T, // default dpi cycle not retained on EEPROM cycle
+  SDPI_T // sniper dpi cycle not retained on EEPROM cycle
 };
 
 bool is_alt_tab_active = false;
 uint16_t alt_tab_timer = 0;
 
-// modifier, layer combos
-const uint16_t PROGMEM tlt_blii_combo[] = {TL_LOWR, KC_Q, COMBO_END};
-const uint16_t PROGMEM trt_brii_combo[] = {TL_UPPR, KC_P, COMBO_END};
+// TODO: change finger combos to location instead of specific keys
+// https://docs.qmk.fm/#/feature_combo?id=layer-independent-combosd
+
 // keycode combos
 const uint16_t PROGMEM dbprn_key_combo[] = {KC_LPRN, KC_RPRN, COMBO_END};
 const uint16_t PROGMEM dbbrc_key_combo[] = {KC_LBRC, KC_RBRC, COMBO_END};
@@ -33,6 +37,10 @@ const uint16_t PROGMEM dbcbr_key_combo[] = {KC_LCBR, KC_RCBR, COMBO_END};
 const uint16_t PROGMEM dbabk_key_combo[] = {KC_LABK, KC_RABK, COMBO_END};
 
 // row: bottom, _middle, top, side: left, right, finger: thumb, index, middle, ring, pinky
+// modifier, layer combos
+const uint16_t PROGMEM tlt_blii_combo[] = {TL_LOWR, KC_Q, COMBO_END};
+const uint16_t PROGMEM trt_brii_combo[] = {TL_UPPR, KC_P, COMBO_END};
+
 const uint16_t PROGMEM blp_blr_combo[] = {KC_X, KC_J, COMBO_END};
 const uint16_t PROGMEM blr_blm_combo[] = {KC_J, KC_B, COMBO_END};
 const uint16_t PROGMEM blp_blm_combo[] = {KC_X, KC_B, COMBO_END};
@@ -62,12 +70,25 @@ combo_t key_combos[] = {
   COMBO(blp_blr_combo, CW_TOGG),
   COMBO(brm_bri_combo, KC_BSPC),
   COMBO(brr_bri_combo, C(KC_BSPC)),
-  COMBO(tlp_tlr_combo, KC_ESC)
+  COMBO(tlp_tlr_combo, KC_ESC),
+  COMBO(brp_brr_combo, KC_TAB)
 };
 
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   switch (keycode) {
+    case DDPI_T:
+      if (record->event.pressed) {
+        charybdis_cycle_pointer_default_dpi_noeeprom(true);
+      }
+      break;
+
+    case SDPI_T:
+      if (record->event.pressed) {
+        charybdis_cycle_pointer_sniping_dpi_noeeprom(true);
+      }
+      break;
+
     case DBPRN:
       if (record->event.pressed) {
         tap_code16(KC_LPRN);
@@ -129,6 +150,23 @@ void matrix_scan_user(void) {
   }
 };
 
+/* auto mouse management*/
+
+void pointing_device_init_user(void) {
+    // set_auto_mouse_layer(_POINTER);
+    set_auto_mouse_enable(true);
+}
+
+// fix sticky scroll?
+// called right before layer changes                v state about to be applied
+layer_state_t layer_state_set_user(layer_state_t state) {
+    if (get_highest_layer(state) != _POINTER) {
+        charybdis_set_pointer_sniping_enabled(false);
+        charybdis_set_pointer_dragscroll_enabled(false);
+    }
+    return state; // don't change state
+}
+
 
 // aliases
 #define OSC OSM(MOD_LCTL)
@@ -139,7 +177,6 @@ void matrix_scan_user(void) {
 #define NEXTTAB C(KC_TAB)
 #define PREVTAB C(S(KC_TAB))
 
-#define NONE_HALF_ROW XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX
 #define NONE XXXXXXX
 
 #define CHARYBDIS_AUTO_SNIPING_ON_LAYER _POINTER
@@ -160,13 +197,13 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   [_EXTENSION] = LAYOUT(
   // ╭─────────────────────────────────────────────╮ ╭─────────────────────────────────────────────╮
-        KC_ESC, KC_LGUI, PREVTAB, NEXTTAB,    NONE,       NONE, KC_HOME,   KC_UP,  KC_END, NONE,
+        KC_ESC, KC_LGUI, PREVTAB, NEXTTAB,    NONE,       NONE, KC_HOME,   KC_UP,  KC_END,    NONE,
   // ├─────────────────────────────────────────────┤ ├─────────────────────────────────────────────┤
            OSG,     OSA,     OSS,     OSC,    NONE,       NONE, KC_LEFT, KC_DOWN, KC_RGHT,  KC_TAB,
   // ├─────────────────────────────────────────────┤ ├─────────────────────────────────────────────┤
-       C(KC_Z), C(KC_X), C(KC_C), C(KC_V),    NONE,       NONE,KC_BSPC,C(KC_BSPC), KC_DEL, NONE,
+       C(KC_Z), C(KC_X), C(KC_C), C(KC_V),    NONE,       NONE,KC_BSPC,C(KC_BSPC), KC_DEL,    NONE,
   // ╰─────────────────────────────────────────────┤ ├─────────────────────────────────────────────╯
-                         _______, _______, _______,    _______, _______
+                         _______, _______, _______,  S(KC_ENT), _______
   //                   ╰───────────────────────────╯ ╰──────────────────╯
   ),
 
@@ -222,11 +259,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // ╭─────────────────────────────────────────────╮ ╭─────────────────────────────────────────────╮
           NONE,    NONE,    NONE,    NONE,    NONE,       NONE,    NONE,    NONE,    NONE,    NONE,
   // ├─────────────────────────────────────────────┤ ├─────────────────────────────────────────────┤
-       DPI_MOD, S_D_MOD, DRGSCRL, KC_LSFT,    NONE,       NONE, KC_BTN1, KC_BTN2, KC_BTN3,    NONE,
+          NONE,    NONE, KC_LSFT, KC_LCTL,    NONE,       NONE, KC_BTN1, KC_BTN2, KC_BTN3,    NONE,
   // ├─────────────────────────────────────────────┤ ├─────────────────────────────────────────────┤
-          NONE,    NONE, SNIPING, KC_LCTL,    NONE,       NONE,    NONE,    NONE,    NONE,    NONE,
+       C(KC_Z), C(KC_X), C(KC_C), C(KC_V),    NONE,       NONE,KC_BSPC,C(KC_BSPC), KC_DEL,    NONE,
   // ╰─────────────────────────────────────────────┤ ├─────────────────────────────────────────────╯
-                         _______,    NONE,    NONE,       NONE,    NONE
+                         _______, DRGSCRL, SNIPING,       NONE,    NONE
   //                   ╰───────────────────────────╯ ╰──────────────────╯
   )
 };
