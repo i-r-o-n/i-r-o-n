@@ -2,7 +2,7 @@
 
 ### contact
 
-discord: iron#1337
+discord: ir.on
 
 #### productivity methods:
 
@@ -17,6 +17,9 @@ discord: iron#1337
 - fluid: water, with a close second being [gelid cryotheum](https://ftbwiki.org/Gelid_Cryotheum) from the [Thermal Foundation](https://ftbwiki.org/Thermal_Foundation) mod for Minecraft
 
 > ### peripherals:
+> - charybdis nano w/ kailh super speed silvers (35g)
+> - ferris sweep w/ choc pinks (20g)
+> - corne (crkbd) lp w/ gChocs (light blue) (20g)
 > - ⌨️ zsa [moonlander](https://configure.zsa.io/embed/moonlander/layouts/RWWdl/latest/0) w/ kailh silvers (~40g)
 > - ⌨ corne lp w/ kalih choc pinks (~20g) (wip board)
 > - 🖱️ corsair harpoon wireless
