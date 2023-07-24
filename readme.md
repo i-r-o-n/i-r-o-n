@@ -43,14 +43,13 @@ discord: ir.on
 
 - journalling productivity application
 - constitutional set-theory visualization using [d3js](https://d3js.org/)
-- transcribe handwriten notes and generae notion cards with appropriate attributes
+- transcribe handwriten notes and generic notion cards with appropriate attributes
 
 
 ## learning goals:
 
 #### languages
 
-- go
 - purescript
 - kotlin mixins
 - haskell
@@ -59,7 +58,6 @@ discord: ir.on
 
 - type theory/algebra
 - [category theory](https://youtu.be/I8LbkfSSR58)
-- diff eqs
 
 ## other goals:
 
