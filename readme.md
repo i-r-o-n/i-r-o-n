@@ -7,7 +7,7 @@ discord: ir.on
 #### productivity methods:
 
 - [semimak](https://github.com/semilin/semimak)
-- [notion](https://notion.so)
+- [obsidian](https://obsidian.md)
 - [vimium](https://vimium.github.io/)
 
 #### favorites
@@ -63,3 +63,4 @@ discord: ir.on
 
 - 200 WPM [typing](https://monkeytype.com/profile/Iron)
 - learn to read old english
+- learn Japanese
