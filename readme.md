@@ -7,7 +7,7 @@ discord: ir.on
 #### productivity methods:
 
 - [semimak](https://github.com/semilin/semimak)
-- [neovim](http://www.lazyvim.org/)
+- [lazy vim](http://www.lazyvim.org/) [dotfiles](https://github.com/i-r-o-n/dotfiles)
 - [vimium](https://vimium.github.io/)
 
 #### favorites
