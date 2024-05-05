@@ -7,7 +7,7 @@ discord: ir.on
 #### productivity methods:
 
 - [semimak](https://github.com/semilin/semimak)
-- [obsidian](https://obsidian.md)
+- [neovim](http://www.lazyvim.org/)
 - [vimium](https://vimium.github.io/)
 
 #### favorites
@@ -27,40 +27,19 @@ discord: ir.on
 
 ## projects:
 
-#### proximal
-
-- [generic discord bot](https://github.com/Irr0n/DreamgroveBot)
-- windows vim navigation tool simailar to [this one](https://github.com/zsims/hunt-and-peck)
-- create notion events from ics feed
-
-#### distal
-
-- minimalist android launcher similar to [this one](https://play.google.com/store/apps/details?id=com.indistractablelauncher.android&hl=en_US&gl=US).
-- corne keyboard firmware layout with many layers
-- [obsidian](https://obsidian.md/)-like node linking graph extension for [notion enhanced](https://notion-enhancer.github.io/)
-
-#### magnidistal
-
-- journalling productivity application
-- constitutional set-theory visualization using [d3js](https://d3js.org/)
-- transcribe handwriten notes and generic notion cards with appropriate attributes
-
+- school!
 
 ## learning goals:
 
 #### languages
 
-- purescript
-- kotlin mixins
+- rust
 - haskell
 
 #### math
 
-- type theory/algebra
 - [category theory](https://youtu.be/I8LbkfSSR58)
 
 ## other goals:
 
 - 200 WPM [typing](https://monkeytype.com/profile/Iron)
-- learn to read old english
-- learn Japanese
