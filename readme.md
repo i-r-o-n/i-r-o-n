@@ -37,7 +37,7 @@ email:
 
 - font: [Jetbrains Mono](https://www.jetbrains.com/lp/mono/) ([nerd font](https://github.com/ryanoasis/nerd-fonts/releases/))
 - [color:](http://randomcolour.com/) (links to a random color)
-- fluid: water, with a close second being [gelid cryotheum](https://ftbwiki.org/Gelid_Cryotheum) from the [Thermal Foundation](https://ftbwiki.org/Thermal_Foundation) mod for Minecraft
+- fluid: water, with a close second being [gelid cryotheum](https://ftbwiki.org/Gelid_Cryotheum)
 
 ## goals
 
