@@ -16,7 +16,7 @@ email:
 *more details in my [dotfiles](https://github.com/i-r-o-n/dotfiles)*
 
 - distros: [gentoo](https://gentoo.org), [arch](https://archlinux.org)
-- window manager: [sway](https://swaywm.org/)
+- window managers: [hyrland](https://hyprland.org),  [sway](https://swaywm.org/)
 
 > ## peripherals:
 > 
