@@ -13,7 +13,7 @@ email:
 - [vimium](https://vimium.github.io/)
 
 ## config
-*more details in my [dotfiles](https://github.com/i-r-o-n/dotfiles)*
+*more details in the [dotfiles](https://github.com/i-r-o-n/dotfiles)*
 
 - distros: [gentoo](https://gentoo.org), [arch](https://archlinux.org)
 - window managers: [hyrland](https://hyprland.org),  [sway](https://swaywm.org/)
