@@ -44,6 +44,7 @@ email:
 ### projects
 
 - school
+- digital pop-up card folding renderer
 
 ### learning
 
